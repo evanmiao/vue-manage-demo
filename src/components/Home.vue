@@ -1,20 +1,29 @@
 <template>
-  <div>
+  <el-container>
     <side-bar></side-bar>
-    <page-header></page-header>
-  </div>
+    <el-container>
+      <el-header height="100px">
+        <page-header></page-header>
+      </el-header>
+      <el-main>
+        <page-main></page-main>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
 import SideBar from "./Aside";
 import PageHeader from "./Header";
+import PageMain from "./Main";
 
 export default {
   name: "HomeHeader",
   components: {
     SideBar,
-    PageHeader
-  } 
+    PageHeader,
+    PageMain
+  }
 };
 </script>
 
