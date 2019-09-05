@@ -1,15 +1,15 @@
 <template>
   <div>
     <el-menu
-      default-active="1-4-1"
-      class="el-menu-vertical-demo"
+      class="el-menu-vertical"
       @open="handleOpen"
       @close="handleClose"
       background-color="#2c2c2c"
       text-color="#fff"
-      active-text-color="#ffd04b"
+      router
       unique-opened
       :collapse="isCollapse"
+      :default-active="$route.path"
     >
       <div class="logo">
         <img
@@ -31,10 +31,10 @@
           <span slot="title">采购价格看板管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="1-1">发布物料</el-menu-item>
-          <el-menu-item index="1-2">物料管理</el-menu-item>
-          <el-menu-item index="1-3">报价看板</el-menu-item>
-          <el-menu-item index="1-4">购物车</el-menu-item>
+          <el-menu-item index="/">发布物料</el-menu-item>
+          <el-menu-item index="/manage">物料管理</el-menu-item>
+          <el-menu-item index="1-3" disabled>报价看板</el-menu-item>
+          <el-menu-item index="1-4" disabled>购物车</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="2">
@@ -112,11 +112,12 @@ export default {
 </script>
 
 <style scoped>
-.el-menu-vertical-demo {
-  min-height: 100%;
+.el-menu-vertical {
+  height: 100%;
+  min-height: 100vh;
 }
 
-.el-menu-vertical-demo:not(.el-menu--collapse) {
+.el-menu-vertical:not(.el-menu--collapse) {
   width: 200px;
 }
 

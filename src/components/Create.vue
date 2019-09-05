@@ -6,7 +6,7 @@
         <page-header></page-header>
       </el-header>
       <el-main>
-        <page-main></page-main>
+        <create-main></create-main>
       </el-main>
     </el-container>
   </el-container>
@@ -15,14 +15,14 @@
 <script>
 import SideBar from "./Aside";
 import PageHeader from "./Header";
-import PageMain from "./Main";
+import CreateMain from "./CreateMain";
 
 export default {
-  name: "HomeHeader",
+  name: "Create",
   components: {
     SideBar,
     PageHeader,
-    PageMain
+    CreateMain
   }
 };
 </script>
