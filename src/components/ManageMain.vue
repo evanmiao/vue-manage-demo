@@ -27,7 +27,13 @@
           <el-option :value="'已下架'"></el-option>
         </el-select>
         <!-- 选择日期 -->
-        <el-date-picker type="date" placeholder="选择日期" v-model="form.date"></el-date-picker>
+        <el-date-picker
+          v-model="form.date"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
         <el-input v-model="form.use" placeholder="请输入应用类/品牌/牌号/产地"></el-input>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="search('form')">搜索</el-button>
@@ -37,7 +43,7 @@
     <el-table
       :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
       style="width: 100%"
-      height="450"
+      height="500"
       size="mini"
       border
     >
@@ -46,7 +52,7 @@
       <el-table-column prop="name" label="物料名称" width="240" align="center"></el-table-column>
       <el-table-column prop="brand" label="品牌" width="120" align="center"></el-table-column>
       <el-table-column prop="model" label="牌号" width="120" align="center"></el-table-column>
-      <el-table-column prop="format" label="规格" width="120" align="center"></el-table-column>
+      <el-table-column prop="format" label="规格" width="140" align="center"></el-table-column>
       <el-table-column prop="address" label="产地" width="120" align="center"></el-table-column>
       <el-table-column prop="status" label="状态" width="120" align="center"></el-table-column>
       <el-table-column label="操作" width="240" align="center">
@@ -88,6 +94,7 @@ export default {
     };
   },
   methods: {
+    // 三级联动选择框的 change 事件
     changeClass1(e) {
       this.form.class2 = "";
       this.form.class3 = "";
@@ -105,6 +112,7 @@ export default {
         }
       }
     },
+    // 搜索
     search(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -118,9 +126,35 @@ export default {
     // 上架/下架
     delivery(e) {
       if (e.status === "已下架") {
-        if (confirm("确定上架？")) e.status = "已上架";
+        this.$confirm("确定上架该物料？", "提示", { type: "info" })
+          .then(() => {
+            e.status = "已上架";
+            this.$message({
+              type: "success",
+              message: "上架成功!"
+            });
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消"
+            });
+          });
       } else {
-        if (confirm("确定下架？")) e.status = "已下架";
+        this.$confirm("确定下架该物料？", "提示", { type: "info" })
+          .then(() => {
+            e.status = "已下架";
+            this.$message({
+              type: "success",
+              message: "下架成功!"
+            });
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消"
+            });
+          });
       }
     },
     // 复制货物
@@ -134,16 +168,36 @@ export default {
     },
     // 编辑
     edit(e) {
-      console.log(e);
-    },
-    // 删除
-    deleteItem(e) {
-      for (var index in this.tableData) {
-        if (e === this.tableData[index]) {
-          this.tableData.splice(index, 1);
-          console.log(this.tableData);
+      this.$router.push({
+        path: "/",
+        name: "Create",
+        params: {
+          edit: e
         }
-      }
+      });
+    },
+    // 删除按钮事件
+    deleteItem(e) {
+      // 弹框
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        type: "warning"
+      })
+        .then(() => {
+          // 删除
+          for (var index in this.tableData) {
+            if (e === this.tableData[index]) this.tableData.splice(index, 1);
+          }
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     },
     // 分页
     currentChange: function(currentPage) {

@@ -126,7 +126,7 @@ export default {
         ],
         name: [
           { required: true, message: "请输入物料名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+          { min: 3, max: 10, message: "长度在 3 到 10 个字符", trigger: "blur" }
         ],
         class: [
           { required: false, message: "请选择物料类", trigger: "change" }
@@ -150,43 +150,67 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // 创建一个对象 把表单的值赋给它
-          var newObj = {
-            use: this.form.use,
-            name: this.form.name,
-            status: "已上架"
-          };
-          // 获取三级联动的值并赋给新对象 从最小一级往上找
-          if (this.form.class3) {
-            newObj.class = this.form.class3;
-          } else if (this.form.class2) {
-            newObj.class = this.form.class2;
-          } else if (this.form.class1) {
-            newObj.class = this.form.class1;
-          } else {
-            newObj.class = this.form.class0;
-          }
-          // 将新对象添加到 localStorge
-          if (localStorage.tableData) {
-            var tableData = JSON.parse(localStorage.tableData);
-            tableData.unshift(newObj);
-            localStorage.tableData = JSON.stringify(tableData);
-          } else {
-            that = this;
-            // 如果 localStorge 中没有则请求本地数据 并添加到 localStorge
-            axios.get("static/tableData.json").then(function(response) {
-              if (response.status == 200) {
-                var tableData = JSON.stringify(response.data.unshift(newObj));
-                localStorage.setItem("tableData", tableData);
-              }
+          // 弹框
+          this.$confirm("确定发布该物料？", "提示", {
+            type: "info"
+          })
+            .then(() => {
+              // 发布物料
+              this.createItem();
+              this.$message({
+                type: "success",
+                message: "发布成功!"
+              });
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "已取消发布"
+              });
             });
-          }
-           this.$router.push({path:'/manage'});
         } else {
-          console.log("error submit!!");
+          this.$message({
+            type: "error",
+            message: "请补全表单项"
+          });
           return false;
         }
       });
+    },
+    // 发布物料
+    createItem() {
+      // 创建一个对象 把表单的值赋给它
+      var newObj = {
+        use: this.form.use,
+        name: this.form.name,
+        status: "已上架"
+      };
+      // 获取三级联动的值并赋给新对象 从最小一级往上找
+      if (this.form.class3) {
+        newObj.class = this.form.class3;
+      } else if (this.form.class2) {
+        newObj.class = this.form.class2;
+      } else if (this.form.class1) {
+        newObj.class = this.form.class1;
+      } else {
+        newObj.class = this.form.class0;
+      }
+      // 将新对象添加到 localStorge
+      if (localStorage.tableData) {
+        var tableData = JSON.parse(localStorage.tableData);
+        tableData.unshift(newObj);
+        localStorage.tableData = JSON.stringify(tableData);
+      } else {
+        that = this;
+        // 如果 localStorge 中没有则请求本地数据 并添加到 localStorge
+        axios.get("static/tableData.json").then(function(response) {
+          if (response.status == 200) {
+            var tableData = JSON.stringify(response.data.unshift(newObj));
+            localStorage.setItem("tableData", tableData);
+          }
+        });
+      }
+      this.$router.push({ path: "/manage" });
     },
     // 一级选择框 change 事件
     changeClass1(e) {
@@ -211,6 +235,7 @@ export default {
         }
       }
     },
+    // 单选按钮组 change 事件
     changeRadio(e) {
       console.log(e);
     }
@@ -224,6 +249,12 @@ export default {
         that.form.classList = response.data;
       }
     });
+    // 如果有路由传参 则将参数绑定到表单
+    if (this.$route.params.edit) {
+      this.form.use = this.$route.params.edit.use;
+      this.form.name = this.$route.params.edit.name;
+      this.form.class3 = this.$route.params.edit.class;
+    }
   }
 };
 </script>
