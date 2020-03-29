@@ -2,11 +2,19 @@
 
 > my first vue project
 
-## 关于此项目
+## 项目简介
 
-- 项目介绍：该项目使用 Vue 实现了一个物料管理平台。包含发布物料、物料管理两个页面，发布物料页实现了三级联动选择框、表单验证等功能，物料管理页实现了编辑、复制、删除、分页、路由传参跳转等功能。项目以 Vue CLI 为基础创建模版，使用 Less 作 CSS 预处理，引用 Element UI 作交互。通过 Vue Router 实现路由的跳转，用 Axios 获取数据，用 Local Storage 存储数据。
+简略的 Vue 练手项目，只做了发布物料、物料管理两个页面，发布物料页实现了三级联动选择框、表单验证等功能，物料管理页实现了编辑、复制、删除、路由传参跳转等功能。
 
-- 技术栈：Vue、Vue CLI、Vue Router、Axios、Element UI、Less、npm
+## 技术栈
+- [Vue](https://cn.vuejs.org/) + [Vue CLI 2](https://cli.vuejs.org/zh/) ：搭建项目模版
+- [Vue Router](https://router.vuejs.org/zh/) ：前端路由跳转
+- [Element UI](https://element.eleme.cn/#/zh-CN/) ：基于 Vue 的桌面端组件库
+- [Less](http://lesscss.org/) ：CSS 预处理器
+- [Axios](https://www.axios.com/) ：基于 Promise 的 HTTP 库
+- [Web Storage](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Storage_API) ：浏览器缓存
+- [webpack](https://webpack.js.org/) ：静态模块打包器
+- [npm](https://www.npmjs.com/) ：包管理
 
 ## 开发和发布
 
@@ -28,29 +36,46 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ## 目录结构
 
-``` bash
+``` pre
+vue-manage-demo
 ├── build                        // webpack 配置文件
-├── config                       // 项目开发环境配置
-│   ├── index.js                 // 项目打包部署配置
-├── src
-│   ├── assets                   // 静态资源
-│   |   ├── reset.css            // 重置样式
-│   ├── components
-│   |   ├── Aside.vue            // 侧边栏公共组件
-│   |   ├── Header.vue           // 头部公共组件
-│   |   ├── CreatMain.vue        // 发布物料页内容组件
-│   |   ├── ManageMain.vue       // 物料管理页内容组件
-│   ├── page
-│   |   ├── Creat.vue            // 发布物料页
-│   |   ├── Manage.vue           // 物料管理页
-│   ├── router
-│   |   ├── index.js             // 路由
-│   ├── App.vue                  // 页面入口文件
-│   └── main.js                  // 程序入口文件，加载各种公共组件
-├── static
+│   ├── build.js                 // 生成环境构建
+│   ├── check-versions.js        // node npm 版本检查
+│   ├── utils.js                 // 构建相关工具
+│   ├── vue-loader.conf.js       // css 加载器配置
+│   ├── webpack.base.conf.js     // webpack 基础配置
+│   ├── webpack.dev.conf.js      // webpack 开发环境配置
+│   └── webpack.prod.conf.js     // webpack 生产环境配置
+├── config                       // 项目基本配置文件
+│   ├── dev.env.js               // 开发环境配置
+│   ├── index.js                 // 主要配置（监听端口、打包路径等）
+│   └── prod.env.js              // 生产环境配置
+├── src                          // 项目核心文件（源码）
+│   ├── assets                   // 资源目录（会被 webpack 构建）
+│   │   └── reset.css            // 重置样式
+│   ├── components               // 组件目录
+│   │   ├── Aside.vue            // 侧边栏公共组件
+│   │   ├── CreateMain.vue       // 发布物料页内容组件
+│   │   ├── Header.vue           // 头部公共组件
+│   │   └── ManageMain.vue       // 物料管理页内容组件
+│   ├── pages                    // 页面目录
+│   │   ├── Create.vue           // 发布物料页
+│   │   └── Manage.vue           // 物料管理页
+│   ├── router                   // 路由
+│   │   └── index.js             // 路由配置文件
+│   ├── App.vue                  // 根组件
+│   └── main.js                  // 入口 js 文件，加载各种公共组件
+├── static                       // 静态资源目录（不会被 webpack 构建，存放图片、字体等）
+│   ├── .gitkeep                 // git 追踪空文件夹
 │   ├── data.json                // 三级联动数据
-│   ├── tableData.json           // 表格数据
-├── index.html                   // 入口 HTML 文件
+│   └── tableData.json           // 物料表格数据
+├── .balelrc                     // 使用 babel 的配置文件，用来设置转码规则和插件
+├── .editerconfig                // 代码规范（缩进等）
+├── .gitignore                   // git 忽略文件
+├── .postcssrc.js                // 指定 css 预处理器，默认配置了 autoprefixer ，自动补全浏览器前缀
+├── deploy.sh                    // 部署脚本
+├── index.html                   // 项目入口文件
+├── package-lock.json            // 锁定依赖包版本号，npm 5 新增，可以优化性能
 ├── package.json                 // 项目依赖
-└── vue.config.js                // vue-cli 3.0 配置
+└── vue.config.js                // 配置打包相对路径
 ```
