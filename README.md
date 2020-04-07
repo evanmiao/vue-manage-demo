@@ -76,6 +76,5 @@ vue-manage-demo
 ├── deploy.sh                    // 部署脚本
 ├── index.html                   // 项目入口文件
 ├── package-lock.json            // 锁定依赖包版本号，npm 5 新增，可以优化性能
-├── package.json                 // 项目依赖
-└── vue.config.js                // 配置打包相对路径
+└── package.json                 // 项目依赖
 ```
