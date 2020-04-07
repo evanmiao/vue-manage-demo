@@ -1,0 +1,52 @@
+[
+  {
+    "use": "冰箱侧板",
+    "class": "冷轧钢板",
+    "name": "冷板",
+    "brand": "-",
+    "model": "SPCC",
+    "format": "0.3*1250*1200mm",
+    "address": "太钢",
+    "status": "已下架"
+  },
+  {
+    "use": "test",
+    "class": "冷轧钢板",
+    "name": "test",
+    "brand": "-",
+    "model": "SPCC",
+    "format": "0.6*1250*1500mm",
+    "address": "沙钢",
+    "status": "已下架"
+  },
+  {
+    "use": "家电外壳",
+    "class": "ABS",
+    "name": "ABS6660H",
+    "brand": "奇美",
+    "model": "6660H",
+    "format": "-",
+    "address": "镇江",
+    "status": "已下架"
+  },
+  {
+    "use": "冰箱侧板",
+    "class": "冷轧钢板",
+    "name": "冷板",
+    "brand": "-",
+    "model": "SPCC",
+    "format": "0.3*1250*1200mm",
+    "address": "太钢",
+    "status": "已下架"
+  },
+  {
+    "use": "家电外壳",
+    "class": "ABS",
+    "name": "ABS6660H",
+    "brand": "奇美",
+    "model": "6660H",
+    "format": "-",
+    "address": "镇江",
+    "status": "已下架"
+  }
+]
